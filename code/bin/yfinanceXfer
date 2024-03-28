@@ -1,0 +1,49 @@
+#! /bin/sh
+
+#
+# Usage spark-shell -b <bool> -e <env>
+#    - copy downloaded prices from yfinance to database
+#
+
+THIS_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+SCALA_ROOT=${THIS_DIR}/../Scala
+universalJar=${SCALA_ROOT}/target/scala-2.12/universal_2.12-0.1.0.jar
+scallop=${SCALA_ROOT}/lib/scallop_2.12-5.0.1.jar
+JARS="${universalJar},${scallop}"
+
+APP_CLASS="universal.apps.YFinanceXfer"
+
+BACKFILL="true"
+ENV="dev"
+
+while getopts b:e: flag
+do
+      case ${flag} in
+	  b) BACKFILL=${OPTARG} ;;
+	  e) ENV=${OPTARG} ;;
+      esac
+done
+
+case ${BACKFILL} in
+  true | false) ;;
+  *)
+      echo "[ERROR] spark-shell -b [true|false] -e <env>"
+      exit 1
+      ;;
+esac
+
+case ${ENV} in
+    dev | prod) ;;
+    *)
+	echo "[ERROR] spark-shell -b <bool> -e [dev|prod]"
+	exit 1
+	;;
+esac
+
+ARGS="--env-name ${ENV} --backfill ${BACKFILL}"
+CMD="spark-submit --class ${APP_CLASS} --jars ${JARS} ${universalJar} ${ARGS}"
+
+#
+# Go for it
+#
+${CMD}
