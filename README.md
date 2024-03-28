@@ -10,7 +10,7 @@ These installation notes has been verified on MacOS, and should work
 on Linux (Windows is unlikely). There are two major steps: 
 
 1. Installing open source and [required tools](https://github.com/lalg/crp-beta?tab=readme-ov-file#required-tools)
-2. [Downloading Universal Portfolio Analysis libraries](#Download Analysis Library)
+2. [Downloading Universal Portfolio Analysis libraries](https://github.com/lalg/crp-beta/blob/main/README.md#download-analysis-library)
 	
 Analysis is then done using 
 [command line commands](#Portfolio Analysis)
