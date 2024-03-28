@@ -1,4 +1,4 @@
-# Universal Portfolio Analysis
+# Portfolio Analysis
 # Beta Version
 
 ## Introduction
@@ -28,7 +28,7 @@ the installation.
 
 
 
-**Brew**
+#### Brew
 The remaining
 tools are easy to download and maintain using _brew_. If brew is not
 present, then in the HOME directory, install using (see 
@@ -50,7 +50,8 @@ Instead it is better to add to the end of the `.zshenv` file.
 eval $(/usr/local/bin/brew shellenv)
 ```
 
-**Apache spark**
+#### Apache spark
+
 Download and install openjdk-17 and apache-spark using using: 
 ```shell
 brew install openjdk@17
@@ -80,7 +81,8 @@ Type :help for more information.
 
 scala> 
 ```
-**Python**
+#### Python
+
 The python environment is vast with its own
 toolset to manages packages. Best to install python3.12 from the 
 [official site](https://www.python.org/downloads/macos/) and use
