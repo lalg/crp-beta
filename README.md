@@ -110,6 +110,15 @@ _github_, and create a directory `crp-beta`:
 ```shell
 git clone https://github.com/lalg/crp-beta.git
 ```
+### .zprofile File
+At the end of all this, the .zprofile file (on the Mac) should look similar to:
+```shell
+export JAVA_HOME=${HOMEBREW}/Cellar/openjdk@17/17.0.10/
+eval $(${HOMEBREW}/bin/brew shellenv)
+PATH="/Library/Frameworks/Python.framework/Versions/3.12/bin:${PATH}"
+```
+Where `HOMEBROW` is bound to a shell variable with the path to the homebrew location. 
+It's okay to substitute the full path instead.
 
 ## Portfolio Analysis
 All portfolio analysis is performed at the shell command line
