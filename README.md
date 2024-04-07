@@ -143,7 +143,13 @@ The command does the following:
 4. Finally the various computed wealths and the weights for the
    portfolio are graphically displayed.
    
-   
+## Updates
+
+New releases can be installed using:
+```shell
+git pull
+```
+
 ## TODO
 To be done is an explanation of the training rate parameter, and
 interpretation of analysis. 
