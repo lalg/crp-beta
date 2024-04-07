@@ -32,6 +32,7 @@ class YFinanceDownload :
         self.backfill = backfill
         self.envName = env
         self.symbols = symbols
+        print(sd, ed)
 
     def universalEnv(self) :
         if self.envName in ("dev", "prod") : return Env(self.envName)
@@ -58,28 +59,41 @@ class YFinanceDownload :
     def downloadSingle(self, symbol) :
         print(f"[INFO] {symbol} -- download")
         pDf = yf.download(symbol, start=self.startDate, end=self.endDate)
-        pDf.reset_index(inplace=True)
+        if (self.startDate == self.endDate) :
+            print(f"[INFO] - {symbol} -- no data")
+            cols = [
+                "date", "symbol", "open", "high", "low", "close",
+                "volume", "year"]
+                    
+            return pd.DataFrame(columns=cols)
         
-        renamed = (
-            pDf
-              .rename(
-                columns = {
-                    "Ticker" : "symbol",
-                    "Date" : "date",
-                    "Open" : "open",
-                    "High" : "high",
-                    "Low" : "low",
-                    "Adj Close" : "close",
-                    "Volume" : "volume"})
-              .sort_index(axis=1)
-              .drop("Close", axis=1))
+        elif (pDf.empty) :
+            print(f"[INFO] - {symbol} -- no data")
+            return pDf
 
-        symbolX = symbol.replace("=X", "")
-        renamed["symbol"] = [symbolX for i in range(0, len(renamed))]
-        renamed["year"] = renamed["date"].dt.year
-        renamed["date"] = renamed["date"].dt.date
-        self.sanityCheck(renamed)
-        return renamed
+        else :
+            pDf.reset_index(inplace=True)
+
+            renamed = (
+                pDf
+                  .rename(
+                    columns = {
+                        "Ticker" : "symbol",
+                        "Date" : "date",
+                        "Open" : "open",
+                        "High" : "high",
+                        "Low" : "low",
+                        "Adj Close" : "close",
+                        "Volume" : "volume"})
+                  .sort_index(axis=1)
+                  .drop("Close", axis=1))
+
+            symbolX = symbol.replace("=X", "")
+            renamed["symbol"] = [symbolX for i in range(0, len(renamed))]
+            renamed["year"] = renamed["date"].dt.year
+            renamed["date"] = renamed["date"].dt.date
+            self.sanityCheck(renamed)
+            return renamed
 
     # with multiple
     # pDf.stack(level=1).rename_axis(['date', 'symbol']).reset_index(level=1)        
